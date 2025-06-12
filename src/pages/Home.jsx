@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "../features/blogs/blogSlice";
 import BlogCard from "../components/BlogCard";
@@ -9,9 +9,15 @@ const Home = () => {
     const { blogs, isLoading, isError, message } = useSelector((state) => state.blogs);
     const { user } = useSelector((state) => state.auth);
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     useEffect(() => {
         dispatch(getBlogs());
     }, [dispatch]);
+
+    const filteredBlogs = blogs.filter((blog) =>
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (isLoading) return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-50 via-white to-blue-100 p-6">
@@ -99,11 +105,26 @@ const Home = () => {
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 mb-2 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogs.map((blog) => (
-                        <BlogCard key={blog._id} blog={blog} colorful />
-                    ))}
+                {/* Search Input */}
+                <div className="mb-8 max-w-xl mx-auto">
+                    <input
+                        type="text"
+                        placeholder="Search blogs by title..."
+                        className="w-full px-4 py-2 border border-blue-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
+
+                {filteredBlogs.length === 0 ? (
+                    <div className="text-center text-gray-500 text-lg">No blogs match your search.</div>
+                ) : (
+                    <div className="grid grid-cols-1 mb-2 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredBlogs.map((blog) => (
+                            <BlogCard key={blog._id} blog={blog} colorful />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
