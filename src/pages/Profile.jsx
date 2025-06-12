@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { reset, getMyBlogs } from "../features/blogs/blogSlice";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,16 @@ const Profile = () => {
     const { blogs, isLoading, isError, message } = useSelector((state) => state.blogs);
     const { user } = useSelector((state) => state.auth);
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     useEffect(() => {
         dispatch(getMyBlogs());
         return () => dispatch(reset());
     }, [dispatch]);
+
+    const filteredBlogs = blogs.filter((blog) =>
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (isLoading) {
         return (
@@ -65,10 +71,21 @@ const Profile = () => {
                         My Blog Posts
                     </h2>
                     <p className="mt-2 text-sm text-blue-500">Here are the posts you have created</p>
+
+                    {/* 🔍 Search Input */}
+                    <div className="mt-6 max-w-sm mx-auto">
+                        <input
+                            type="text"
+                            placeholder="Search by title..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full px-4 py-2 border border-blue-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogs.map((blog) => (
+                    {filteredBlogs.map((blog) => (
                         <div
                             key={blog._id}
                             onClick={() => navigate(`/blogs/${blog._id}`)}
@@ -80,6 +97,13 @@ const Profile = () => {
                         </div>
                     ))}
                 </div>
+
+                {/* ✨ Empty State for Search */}
+                {filteredBlogs.length === 0 && (
+                    <div className="text-center text-blue-600 mt-8 text-lg">
+                        No blog posts match your search.
+                    </div>
+                )}
             </div>
         </div>
     );
