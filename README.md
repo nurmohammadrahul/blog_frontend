@@ -1,12 +1,43 @@
-# React + Vite
+# 📝 MERN Blog App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack blog application built with the MERN (MongoDB, Express, React, Node.js) stack. Users can create, read, update, and delete blog posts with authentication, styled using Tailwind CSS and managed via Redux Toolkit.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend: [https://nursblog.vercel.app](https://nursblog.vercel.app)  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Tech Stack
+
+### 🔵 Frontend
+- React.js
+- Tailwind CSS
+- Redux Toolkit
+- React Router v6
+- Axios
+- Lucide React Icons
+
+### 🟢 Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JSON Web Tokens (JWT)
+- Bcrypt
+- Cloudinary (for image uploads)
+
+---
+
+## ✨ Features
+
+- 🧑‍💻 User registration & login (JWT Auth)
+- ✍️ Create, read, update, delete blogs
+- 🔒 Private  route protection
+- 📈 Blog view counter
+- 🖼️ Image upload via Cloudinary
+- 📃 Rich-text formatting (bold, italic, underline, lists)
+- 🎨 Responsive UI with Tailwind CSS
+- 💾 Persistent login with token-based auth
+- ⚠️ Error, loading, and empty states
+
+---
