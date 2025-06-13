@@ -62,11 +62,20 @@ const EditBlog = () => {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
+
     if (!token) {
       alert("You must be logged in to edit a blog.");
       setSubmitting(false);
       return;
     }
+
+    // Check if content is empty or only whitespace
+    if (!contentRef.current.innerText.trim()) {
+      setError("Blog content cannot be empty.");
+      setSubmitting(false);
+      return;
+    }
+
     try {
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/blogs/${id}`,
@@ -99,14 +108,13 @@ const EditBlog = () => {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-700">
               Edit Blog
             </h2>
-            <p className="text-blue-400 mt-1">
-              Refresh your ideas with updates
-            </p>
+            <p className="text-blue-400 mt-1">Refresh your ideas with updates</p>
           </div>
           <button
             onClick={() => navigate(-1)}
             className="text-blue-500 hover:text-blue-700 transition"
             title="Go Back"
+            aria-label="Go Back"
           >
             <ArrowLeftCircle size={32} />
           </button>
@@ -151,6 +159,7 @@ const EditBlog = () => {
                 type="button"
                 onClick={() => formatText("bold")}
                 title="Bold"
+                aria-label="Bold"
                 className="p-2 border rounded hover:bg-blue-100"
               >
                 <Bold size={18} />
@@ -159,6 +168,7 @@ const EditBlog = () => {
                 type="button"
                 onClick={() => formatText("italic")}
                 title="Italic"
+                aria-label="Italic"
                 className="p-2 border rounded hover:bg-blue-100"
               >
                 <Italic size={18} />
@@ -167,6 +177,7 @@ const EditBlog = () => {
                 type="button"
                 onClick={() => formatText("underline")}
                 title="Underline"
+                aria-label="Underline"
                 className="p-2 border rounded hover:bg-blue-100"
               >
                 <Underline size={18} />
@@ -175,6 +186,7 @@ const EditBlog = () => {
                 type="button"
                 onClick={() => formatText("insertUnorderedList")}
                 title="Bullet List"
+                aria-label="Bullet List"
                 className="p-2 border rounded hover:bg-blue-100"
               >
                 <List size={18} />
@@ -183,6 +195,7 @@ const EditBlog = () => {
                 type="button"
                 onClick={() => formatText("insertOrderedList")}
                 title="Numbered List"
+                aria-label="Numbered List"
                 className="p-2 border rounded hover:bg-blue-100"
               >
                 <ListOrdered size={18} />

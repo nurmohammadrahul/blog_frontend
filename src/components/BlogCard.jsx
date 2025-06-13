@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
 
+// Utility to strip HTML tags
+const stripHtml = (html) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
+};
+
 const BlogCard = ({ blog }) => (
     <div className="bg-gradient-to-br from-white via-blue-50 to-indigo-100 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-blue-200 transform hover:-translate-y-1 flex flex-col">
         <div className="p-5 sm:p-6 flex flex-col flex-grow">
@@ -38,7 +45,7 @@ const BlogCard = ({ blog }) => (
 
             {/* Blog Snippet */}
             <p className="text-gray-700 mb-4 text-sm sm:text-base line-clamp-3 flex-grow leading-relaxed">
-                {blog.content}
+                {stripHtml(blog.content)}
             </p>
 
             {/* Read More */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import DOMPurify from "dompurify";
 
 const BlogDetails = () => {
     const { id } = useParams();
@@ -134,11 +135,10 @@ const BlogDetails = () => {
                 </div>
 
                 <div className="p-6 sm:p-8 text-purple-900">
-                    <div className="prose prose-purple max-w-none">
-                        {blog.content.split("\n").map((paragraph, index) => (
-                            <p key={index}>{paragraph}</p>
-                        ))}
-                    </div>
+                    <div
+                        className="prose prose-purple max-w-none"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
+                    />
                 </div>
 
                 <div className="bg-gradient-to-tr from-purple-50 via-white to-purple-100 px-6 py-4 border-t border-purple-300 flex justify-between items-center rounded-b-2xl">
